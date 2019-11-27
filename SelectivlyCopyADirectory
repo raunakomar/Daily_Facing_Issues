@@ -1,0 +1,37 @@
+Function RemoveUnwantedFoldersAndFiles
+{
+Param ([string] $source,
+       [string] $destination,
+       [string[]]$excludeDir,
+       [string[]]$excludeFile)
+
+$subDir= Get-ChildItem $source -Directory
+$subFiles = Get-ChildItem $source -File
+
+#Exclude items from list
+$selectedDirs= $subDir|
+ Where-Object {(  $_.Name) -notin $excludeDir}
+
+$selectedFiles= $subFiles | Where-Object {($_.Name) -notin $excludeFile }
+
+
+$selectedDirs | ForEach-Object{
+   
+        mkdir ($destination + "\" + $_.Name)
+   
+    RemoveUnwantedFoldersAndFiles ($source +"\" +$_.Name) ($destination + "\" + $_.Name) $excludeDir $excludeFile
+}
+
+  
+  $selectedFiles | ForEach-Object{
+    Copy-Item ($source+ "\" + $_.Name) -Destination $destination
+}
+
+
+}
+
+$exDir= ("director-launcher","interactive-deployment", "LogTracer" ,"Marvin" ,"splunk-dashboard")
+
+$exfile="README.txt"
+
+RemoveUnwantedFoldersAndFiles "C:\CVAD\appmanagement\Cloud\DevOps\Scripts\DirectorService"  "C:\Users\raunako\Desktop\FedRampPOC\artifacts"  $exDir $exfile
