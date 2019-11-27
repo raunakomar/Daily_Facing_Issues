@@ -30,8 +30,8 @@ $selectedDirs | ForEach-Object{
 
 }
 
-$exDir= ("director-launcher","interactive-deployment", "LogTracer" ,"Marvin" ,"splunk-dashboard")
+$exDir= ("dir1","dir2", "dir3" ,"dir4" ,"dir5")
 
-$exfile="README.txt"
+$exfile=("README.txt")
 
-RemoveUnwantedFoldersAndFiles "C:\CVAD\appmanagement\Cloud\DevOps\Scripts\DirectorService"  "C:\Users\raunako\Desktop\FedRampPOC\artifacts"  $exDir $exfile
+RemoveUnwantedFoldersAndFiles "SourceDirectory"  "DestinationDirectory"  $exDir $exfile
